@@ -1,6 +1,6 @@
 package edu.kis.powp.jobs2d;
 
-import java.awt.EventQueue;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -9,6 +9,7 @@ import edu.kis.legacy.drawer.panel.DefaultDrawerFrame;
 import edu.kis.legacy.drawer.panel.DrawPanelController;
 import edu.kis.powp.appbase.Application;
 import edu.kis.powp.jobs2d.drivers.adapter.Jobs2dToDrawPanelAdapter;
+import edu.kis.powp.jobs2d.drivers.adapter.Line;
 import edu.kis.powp.jobs2d.drivers.adapter.LineDrawerAdapter;
 import edu.kis.powp.jobs2d.events.SelectChangeVisibleOptionListener;
 import edu.kis.powp.jobs2d.events.SelectTestFigureOptionListener;
@@ -40,13 +41,27 @@ public class TestJobs2dPatterns {
 		DriverFeature.addDriver("Logger Driver", loggerDriver);
 		DriverFeature.getDriverManager().setCurrentDriver(loggerDriver);
 
-		Job2dDriver testDriver = new Jobs2dToDrawPanelAdapter(DrawerFeature.getDrawerController());
-		DriverFeature.addDriver("Buggy Simulator", testDriver);
+		Job2dDriver lineDriver = new LineDrawerAdapter(
+                DrawerFeature.getDrawerController(), new Line());
+		DriverFeature.addDriver("Line", lineDriver
+        );
 
-        Job2dDriver specialLineDriver = new LineDrawerAdapter(DrawerFeature.getDrawerController());
-        DriverFeature.addDriver("SpecialLine", specialLineDriver);
+        Job2dDriver specialLineDriver = new LineDrawerAdapter(
+                DrawerFeature.getDrawerController(), new Line(true)
+        );
+        DriverFeature.addDriver("Special Line", specialLineDriver);
 
-		DriverFeature.updateDriverInfo();
+        Job2dDriver redLineDriver = new LineDrawerAdapter(
+                DrawerFeature.getDrawerController(), new Line(Color.RED)
+        );
+        DriverFeature.addDriver("Special Red Line", redLineDriver);
+
+        Job2dDriver yellowSpecialLineDriver = new LineDrawerAdapter(
+                DrawerFeature.getDrawerController(), new Line(Color.YELLOW, true)
+        );
+        DriverFeature.addDriver("Special Yellow Line", yellowSpecialLineDriver);
+
+        DriverFeature.updateDriverInfo();
 	}
 
 	/**
